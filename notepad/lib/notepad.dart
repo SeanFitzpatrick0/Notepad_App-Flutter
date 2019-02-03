@@ -12,7 +12,7 @@ import 'package:flutter/material.dart';
 import './note.dart';
 
 class Notepad extends StatelessWidget {
-  final List<Note> notes = <Note>[];
+  final List<Note> _notes = <Note>[];
 
   @override
   Widget build(BuildContext context) {
@@ -22,9 +22,16 @@ class Notepad extends StatelessWidget {
           child: Text('Notepad'),
         ),
       ),
-      body: Center(
-        child: Text('Add a note.'),
-      ),
+      body: _listNotes(),
     );
+  }
+
+  Widget _listNotes() {
+    if(_notes.isEmpty){
+      return Center(
+        child: Text('Add a note.'),
+      );
+    }
+    //TODO add a list view for notes
   }
 }
