@@ -6,3 +6,21 @@ Description: This is the home screen for the app.
   If no notes exist then will display text to encorage 
   the usere to add a note.
 */
+
+import 'package:flutter/material.dart';
+
+class Notepad extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Center(
+          child: Text('Notepad'),
+        ),
+      ),
+      body: Center(
+        child: Text('Add a note.'),
+      ),
+    );
+  }
+}
