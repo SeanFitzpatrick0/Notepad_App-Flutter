@@ -9,7 +9,11 @@ Description: This is the home screen for the app.
 
 import 'package:flutter/material.dart';
 
+import './note.dart';
+
 class Notepad extends StatelessWidget {
+  final List<Note> notes = <Note>[];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
