@@ -30,6 +30,46 @@ class Notepad extends StatelessWidget {
       content: 'Test data',
       color: Colors.blue,
     ),
+    Note(
+      title: 'Note 3',
+      content: 'Test data',
+      color: Colors.blue,
+    ),
+    Note(
+      title: 'Note 3',
+      content: 'Test data',
+      color: Colors.blue,
+    ),
+    Note(
+      title: 'Note 3',
+      content: 'Test data',
+      color: Colors.blue,
+    ),
+    Note(
+      title: 'Note 3',
+      content: 'Test data',
+      color: Colors.blue,
+    ),
+    Note(
+      title: 'Note 3',
+      content: 'Test data',
+      color: Colors.blue,
+    ),
+    Note(
+      title: 'Note 3',
+      content: 'Test data',
+      color: Colors.blue,
+    ),
+    Note(
+      title: 'Note 3',
+      content: 'Test data',
+      color: Colors.blue,
+    ),
+    Note(
+      title: 'Note 3',
+      content: 'Test data',
+      color: Colors.blue,
+    ),
   ];
 
   @override
@@ -40,7 +80,12 @@ class Notepad extends StatelessWidget {
           child: Text('Notepad'),
         ),
       ),
-      body: _listNotes(),
+      body: Stack(
+        children: <Widget>[
+          _listNotes(),
+          _addNoteButton(),
+        ],
+      ),
     );
   }
 
@@ -50,28 +95,47 @@ class Notepad extends StatelessWidget {
         child: Text('Add a note.'),
       );
     }
-    return ListView.builder(
-      itemCount: _notes.length,
-      itemBuilder: (BuildContext ctx, int i) {
-        return Container(
-          margin: EdgeInsets.all(3.0),
-          decoration: BoxDecoration(
-            color: _notes[i].color,
-            border: Border.all(
-              width: 2.0,
-              color: Colors.grey,
+    return Positioned(
+      child: ListView.builder(
+        itemCount: _notes.length,
+        itemBuilder: (BuildContext ctx, int i) {
+          return Container(
+            margin: EdgeInsets.all(3.0),
+            decoration: BoxDecoration(
+              color: _notes[i].color,
+              border: Border.all(
+                width: 2.0,
+                color: Colors.grey,
+              ),
+              borderRadius: BorderRadius.all(Radius.circular(5.0)),
             ),
-            borderRadius: BorderRadius.all(Radius.circular(5.0)),
-          ),
-          child: ListTile(
-            title: Text(_notes[i].title),
-            trailing: Icon(
-              Icons.star,
-              color: _notes[i].isImportant ? Colors.yellow : null,
+            child: ListTile(
+              title: Text(_notes[i].title),
+              trailing: Icon(
+                Icons.star,
+                color: _notes[i].isImportant ? Colors.yellow : null,
+              ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
+  }
+
+  Widget _addNoteButton() {
+    return Positioned(
+        bottom: 30,
+        right: 30,
+        child: FloatingActionButton(
+          tooltip: 'Add Note',
+          child: new Icon(
+            Icons.add,
+            color: Colors.red,
+          ),
+          backgroundColor: Colors.yellow,
+          onPressed: () {
+            // TODO ad navigation to create note page
+          },
+        ));
   }
 }
