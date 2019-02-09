@@ -10,6 +10,7 @@ Description: This is the home screen for the app.
 import 'package:flutter/material.dart';
 
 import './note.dart';
+import './noteCreate.dart';
 
 class Notepad extends StatelessWidget {
   //final List<Note> _notes = <Note>[];
@@ -73,7 +74,7 @@ class Notepad extends StatelessWidget {
   ];
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext ctx) {
     return Scaffold(
       appBar: AppBar(
         title: Center(
@@ -83,7 +84,7 @@ class Notepad extends StatelessWidget {
       body: Stack(
         children: <Widget>[
           _listNotes(),
-          _addNoteButton(),
+          _addNoteButton(ctx),
         ],
       ),
     );
@@ -122,7 +123,7 @@ class Notepad extends StatelessWidget {
     );
   }
 
-  Widget _addNoteButton() {
+  Widget _addNoteButton(BuildContext ctx) {
     return Positioned(
         bottom: 30,
         right: 30,
@@ -134,8 +135,21 @@ class Notepad extends StatelessWidget {
           ),
           backgroundColor: Colors.yellow,
           onPressed: () {
-            // TODO ad navigation to create note page
+            _navigateToCreateNote(ctx);
           },
         ));
+  }
+
+  void _navigateToCreateNote(BuildContext ctx) {
+    if (Navigator.of(ctx).canPop()) {
+      Navigator.of(ctx).pop();
+    }
+    Navigator.of(ctx).push(
+      MaterialPageRoute<Null>(
+        builder: (BuildContext context) {
+          return NoteCreate();
+        },
+      ),
+    );
   }
 }
