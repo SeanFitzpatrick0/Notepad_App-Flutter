@@ -10,7 +10,6 @@ Description: This is the page used to create new and edit existing
 import 'package:flutter/material.dart';
 
 import './note.dart';
-import './notepad.dart';
 
 class NoteCreate extends StatefulWidget {
   @override
@@ -41,6 +40,8 @@ class _NoteFormState extends State<NoteForm> {
   final _formKey = GlobalKey<FormState>();
   final titleController = TextEditingController();
   final contentController = TextEditingController();
+  bool _isImportant = false;
+  Color _color;
 
   @override
   void dispose() {
@@ -83,8 +84,11 @@ class _NoteFormState extends State<NoteForm> {
   }
 
   Widget _colorDropDown() {
-    String _color;
-    List<String> _colors = ['RED', 'GREEN', 'BLUE'];
+    List colors = [
+      ['Red', Colors.red],
+      ['Green', Colors.green],
+      ['Blue', Colors.blue]
+    ];
     return FormField(
       builder: (FormFieldState state) {
         return InputDecorator(
@@ -92,21 +96,32 @@ class _NoteFormState extends State<NoteForm> {
             icon: const Icon(Icons.color_lens),
             labelText: 'Color',
           ),
-          isEmpty: _color == '',
+          isEmpty: _color == null,
           child: new DropdownButtonHideUnderline(
             child: new DropdownButton(
               value: _color,
               isDense: true,
-              onChanged: (String newValue) {
+              onChanged: (newValue) {
                 setState(() {
                   _color = newValue;
                   state.didChange(newValue);
                 });
               },
-              items: _colors.map((String value) {
-                return new DropdownMenuItem(
-                  value: value,
-                  child: new Text(value),
+              items: colors.map((val) {
+                String colorName = val[0];
+                Color colorVal = val[1];
+                return DropdownMenuItem(
+                  value: colorVal,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Text(colorName),
+                      Icon(
+                        Icons.indeterminate_check_box,
+                        color: colorVal,
+                      ),
+                    ],
+                  ),
                 );
               }).toList(),
             ),
@@ -143,11 +158,13 @@ class _NoteFormState extends State<NoteForm> {
           tooltip: 'Important',
           icon: Icon(
             Icons.star,
-            color: Colors.grey,
+            color: _isImportant ? Colors.yellow : Colors.grey,
             size: 50.0,
           ),
           onPressed: () {
-            print('isImportant Pressed');
+            setState(() {
+              _isImportant = !_isImportant;
+            });
           },
         ));
   }
@@ -168,6 +185,8 @@ class _NoteFormState extends State<NoteForm> {
             Note newNote = Note(
               title: titleController.text,
               content: contentController.text,
+              isImportant: _isImportant,
+              color: _color,
             );
             Navigator.pop(ctx, newNote);
           }
