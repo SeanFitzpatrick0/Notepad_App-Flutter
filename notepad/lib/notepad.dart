@@ -90,19 +90,20 @@ class _NotepadState extends State<Notepad> {
 
   Widget _addNoteButton(BuildContext ctx) {
     return Positioned(
-        bottom: 30,
-        right: 30,
-        child: FloatingActionButton(
-          tooltip: 'Add Note',
-          child: new Icon(
-            Icons.add,
-            color: Colors.red,
-          ),
-          backgroundColor: Colors.yellow,
-          onPressed: () {
-            _navigateToCreateNote(ctx);
-          },
-        ));
+      bottom: 30,
+      right: 30,
+      child: FloatingActionButton(
+        tooltip: 'Add Note',
+        child: new Icon(
+          Icons.add,
+          color: Colors.red,
+        ),
+        backgroundColor: Colors.yellow,
+        onPressed: () {
+          _navigateToCreateNote(ctx);
+        },
+      ),
+    );
   }
 
   void _navigateToCreateNote(BuildContext ctx) async {
