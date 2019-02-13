@@ -87,7 +87,8 @@ class _NoteFormState extends State<NoteForm> {
     List colors = [
       ['Red', Colors.red],
       ['Green', Colors.green],
-      ['Blue', Colors.blue]
+      ['Blue', Colors.blue],
+      ['None', Colors.transparent],
     ];
     return FormField(
       builder: (FormFieldState state) {
