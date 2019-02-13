@@ -23,24 +23,36 @@ class _NoteCreateState extends State<NoteCreate> {
       ),
       body: Padding(
         padding: EdgeInsets.all(20.0),
-        child: Form(
-          child: Stack(
-            children: <Widget>[
-              Column(
-                children: <Widget>[
-                  _titleBox(),
-                  _colorDropDown(),
-                  _contentBox(),
-                ],
-              ),
-              _isImportantButton(),
-              _submitButton(),
-            ],
-          ),
-        ),
+        child: NoteForm(),
       ),
     );
   }
+}
+
+class NoteForm extends StatefulWidget {
+  @override
+  _NoteFormState createState() => _NoteFormState();
+}
+
+class _NoteFormState extends State<NoteForm> {
+  final _formKey = GlobalKey<FormState>();
+
+  @override
+  Widget build(BuildContext context) => Form(
+        child: Stack(
+          children: <Widget>[
+            Column(
+              children: <Widget>[
+                _titleBox(),
+                _colorDropDown(),
+                _contentBox(),
+              ],
+            ),
+            _isImportantButton(),
+            _submitButton(),
+          ],
+        ),
+      );
 
   Widget _titleBox() {
     return TextFormField(
@@ -48,6 +60,11 @@ class _NoteCreateState extends State<NoteCreate> {
         icon: Icon(Icons.create),
         labelText: 'Title',
       ),
+      validator: (String value) {
+        if (value.isEmpty) {
+          return 'Please enter a title';
+        }
+      },
     );
   }
 
@@ -87,32 +104,37 @@ class _NoteCreateState extends State<NoteCreate> {
 
   Widget _contentBox() {
     return Expanded(
-      child: TextField(
+      child: TextFormField(
         keyboardType: TextInputType.multiline,
         maxLines: null,
         decoration: InputDecoration(
           labelText: 'Content',
           icon: Icon(Icons.dehaze),
         ),
+        validator: (value) {
+          if (value.isEmpty) {
+            return 'Please enter some text';
+          }
+        },
       ),
     );
   }
 
   Widget _isImportantButton() {
     return Positioned(
-      right: 30,
-      bottom: 90,
+        right: 30,
+        bottom: 90,
         child: IconButton(
-      tooltip: 'Important',
-      icon: Icon(
-        Icons.star,
-        color: Colors.grey,
-        size: 50.0,
-      ),
-      onPressed: () {
-        print('isImportant Pressed');
-      },
-    ));
+          tooltip: 'Important',
+          icon: Icon(
+            Icons.star,
+            color: Colors.grey,
+            size: 50.0,
+          ),
+          onPressed: () {
+            print('isImportant Pressed');
+          },
+        ));
   }
 
   Widget _submitButton() {
