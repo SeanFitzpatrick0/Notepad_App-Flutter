@@ -12,7 +12,12 @@ import 'package:flutter/material.dart';
 import './note.dart';
 import './noteCreate.dart';
 
-class Notepad extends StatelessWidget {
+class Notepad extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => _NotepadState();
+}
+
+class _NotepadState extends State<Notepad> {
   //final List<Note> _notes = <Note>[];
   // Mock data
   final List<Note> _notes = <Note>[
@@ -25,46 +30,6 @@ class Notepad extends StatelessWidget {
       content: 'Test data',
       color: Colors.red,
       isImportant: true,
-    ),
-    Note(
-      title: 'Note 3',
-      content: 'Test data',
-      color: Colors.blue,
-    ),
-    Note(
-      title: 'Note 3',
-      content: 'Test data',
-      color: Colors.blue,
-    ),
-    Note(
-      title: 'Note 3',
-      content: 'Test data',
-      color: Colors.blue,
-    ),
-    Note(
-      title: 'Note 3',
-      content: 'Test data',
-      color: Colors.blue,
-    ),
-    Note(
-      title: 'Note 3',
-      content: 'Test data',
-      color: Colors.blue,
-    ),
-    Note(
-      title: 'Note 3',
-      content: 'Test data',
-      color: Colors.blue,
-    ),
-    Note(
-      title: 'Note 3',
-      content: 'Test data',
-      color: Colors.blue,
-    ),
-    Note(
-      title: 'Note 3',
-      content: 'Test data',
-      color: Colors.blue,
     ),
     Note(
       title: 'Note 3',
@@ -145,6 +110,8 @@ class Notepad extends StatelessWidget {
       ctx,
       MaterialPageRoute(builder: (ctx) => NoteCreate()),
     );
-    print(newNote);
+    setState(() {
+      _notes.add(newNote);
+    });
   }
 }
