@@ -9,6 +9,9 @@ Description: This is the page used to create new and edit existing
 
 import 'package:flutter/material.dart';
 
+import './note.dart';
+import './notepad.dart';
+
 class NoteCreate extends StatefulWidget {
   @override
   _NoteCreateState createState() => _NoteCreateState();
@@ -36,9 +39,19 @@ class NoteForm extends StatefulWidget {
 
 class _NoteFormState extends State<NoteForm> {
   final _formKey = GlobalKey<FormState>();
+  final titleController = TextEditingController();
+  final contentController = TextEditingController();
 
   @override
-  Widget build(BuildContext context) => Form(
+  void dispose() {
+    titleController.dispose();
+    contentController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext ctx) => Form(
+        key: _formKey,
         child: Stack(
           children: <Widget>[
             Column(
@@ -49,13 +62,14 @@ class _NoteFormState extends State<NoteForm> {
               ],
             ),
             _isImportantButton(),
-            _submitButton(),
+            _submitButton(ctx),
           ],
         ),
       );
 
   Widget _titleBox() {
     return TextFormField(
+      controller: titleController,
       decoration: InputDecoration(
         icon: Icon(Icons.create),
         labelText: 'Title',
@@ -105,6 +119,7 @@ class _NoteFormState extends State<NoteForm> {
   Widget _contentBox() {
     return Expanded(
       child: TextFormField(
+        controller: contentController,
         keyboardType: TextInputType.multiline,
         maxLines: null,
         decoration: InputDecoration(
@@ -137,7 +152,7 @@ class _NoteFormState extends State<NoteForm> {
         ));
   }
 
-  Widget _submitButton() {
+  Widget _submitButton(BuildContext ctx) {
     return Positioned(
       bottom: 15.0,
       right: 15.0,
@@ -149,7 +164,13 @@ class _NoteFormState extends State<NoteForm> {
           color: Colors.green,
         ),
         onPressed: () {
-          print('Submit button pressed!');
+          if (_formKey.currentState.validate()) {
+            Note newNote = Note(
+              title: titleController.text,
+              content: contentController.text,
+            );
+            Navigator.pop(ctx, newNote);
+          }
         },
       ),
     );

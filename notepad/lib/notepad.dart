@@ -140,16 +140,11 @@ class Notepad extends StatelessWidget {
         ));
   }
 
-  void _navigateToCreateNote(BuildContext ctx) {
-    if (Navigator.of(ctx).canPop()) {
-      Navigator.of(ctx).pop();
-    }
-    Navigator.of(ctx).push(
-      MaterialPageRoute<Null>(
-        builder: (BuildContext context) {
-          return NoteCreate();
-        },
-      ),
+  void _navigateToCreateNote(BuildContext ctx) async {
+    final newNote = await Navigator.push(
+      ctx,
+      MaterialPageRoute(builder: (ctx) => NoteCreate()),
     );
+    print(newNote);
   }
 }
