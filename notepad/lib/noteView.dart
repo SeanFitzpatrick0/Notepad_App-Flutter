@@ -33,6 +33,22 @@ class NoteView extends StatelessWidget {
         ),
         backgroundColor: currentNote.color,
       ),
+      body: SizedBox.expand(
+        child: Card(
+          elevation: 7.0,
+          margin: EdgeInsets.all(30.0),
+          child: Padding(
+            padding: EdgeInsets.all(15.0),
+            child: Text(
+              currentNote.content,
+              style: TextStyle(
+                fontSize: 20.0,
+                color: Colors.black,
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
