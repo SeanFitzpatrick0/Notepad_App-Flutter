@@ -111,8 +111,10 @@ class _NotepadState extends State<Notepad> {
       ctx,
       MaterialPageRoute(builder: (ctx) => NoteCreate()),
     );
-    setState(() {
-      _notes.add(newNote);
-    });
+    if (newNote != null) {
+      setState(() {
+        _notes.add(newNote);
+      });
+    }
   }
 }
