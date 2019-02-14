@@ -19,7 +19,19 @@ class NoteView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(currentNote.title),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            Text(currentNote.title),
+            currentNote.isImportant
+                ? Icon(
+                    Icons.star,
+                    color: Colors.yellow,
+                  )
+                : Icon(null),
+          ],
+        ),
+        backgroundColor: currentNote.color,
       ),
     );
   }
