@@ -88,6 +88,21 @@ class _NotepadState extends State<Notepad> {
                   });
                 },
               ),
+              onTap: () {
+                Navigator.push(
+                  ctx,
+                  MaterialPageRoute(
+                    builder: (ctx) => Scaffold(
+                          appBar: AppBar(
+                            title: Text('Note view'),
+                          ),
+                          body: Center(
+                            child: Text('Note Content'),
+                          ),
+                        ),
+                  ),
+                );
+              },
             ),
           );
         },
