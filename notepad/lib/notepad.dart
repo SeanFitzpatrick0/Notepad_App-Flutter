@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 
 import './note.dart';
 import './noteCreate.dart';
+import './noteView.dart';
 
 class Notepad extends StatefulWidget {
   @override
@@ -92,14 +93,9 @@ class _NotepadState extends State<Notepad> {
                 Navigator.push(
                   ctx,
                   MaterialPageRoute(
-                    builder: (ctx) => Scaffold(
-                          appBar: AppBar(
-                            title: Text('Note view'),
-                          ),
-                          body: Center(
-                            child: Text('Note Content'),
-                          ),
-                        ),
+                    builder: (ctx) => NoteView(
+                      currentNote: _notes[i],
+                    ),
                   ),
                 );
               },
