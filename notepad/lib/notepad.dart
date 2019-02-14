@@ -77,9 +77,16 @@ class _NotepadState extends State<Notepad> {
             ),
             child: ListTile(
               title: Text(_notes[i].title),
-              trailing: Icon(
-                Icons.star,
-                color: _notes[i].isImportant ? Colors.yellow : null,
+              trailing: IconButton(
+                icon: Icon(
+                  Icons.star,
+                  color: _notes[i].isImportant ? Colors.yellow : null,
+                ),
+                onPressed: () {
+                  setState(() {
+                    _notes[i].isImportant = !_notes[i].isImportant;
+                  });
+                },
               ),
             ),
           );
@@ -94,7 +101,7 @@ class _NotepadState extends State<Notepad> {
       right: 30,
       child: FloatingActionButton(
         tooltip: 'Add Note',
-        child: new Icon(
+        child: Icon(
           Icons.add,
           color: Colors.red,
         ),

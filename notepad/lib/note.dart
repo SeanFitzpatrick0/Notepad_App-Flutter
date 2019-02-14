@@ -9,7 +9,7 @@ class Note {
   final String title;
   final String content;
   final Color color;
-  final bool isImportant;
+  bool isImportant;
 
   Note ({
     @required this.title,
