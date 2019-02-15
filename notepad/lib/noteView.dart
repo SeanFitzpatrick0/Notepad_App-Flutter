@@ -18,36 +18,76 @@ class NoteView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            Text(currentNote.title),
-            currentNote.isImportant
-                ? Icon(
-                    Icons.star,
-                    color: Colors.yellow,
-                  )
-                : Icon(null),
-          ],
-        ),
-        backgroundColor: currentNote.color,
+      appBar: _appbar(),
+      body: Stack(
+        children: <Widget>[
+          _contentBox(),
+          _editButton(),
+          _deleteButton(),
+        ],
       ),
-      body: SizedBox.expand(
-        child: Card(
-          elevation: 7.0,
-          margin: EdgeInsets.all(30.0),
-          child: Padding(
-            padding: EdgeInsets.all(15.0),
-            child: Text(
-              currentNote.content,
-              style: TextStyle(
-                fontSize: 20.0,
-                color: Colors.black,
-              ),
+    );
+  }
+
+  Widget _appbar() {
+    return AppBar(
+      title: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+          Text(currentNote.title),
+          currentNote.isImportant
+              ? Icon(
+                  Icons.star,
+                  color: Colors.yellow,
+                )
+              : Icon(null),
+        ],
+      ),
+      backgroundColor: currentNote.color,
+    );
+  }
+
+  Widget _contentBox() {
+    return SizedBox.expand(
+      child: Card(
+        elevation: 7.0,
+        margin: EdgeInsets.all(30.0),
+        child: Padding(
+          padding: EdgeInsets.all(15.0),
+          child: Text(
+            currentNote.content,
+            style: TextStyle(
+              fontSize: 20.0,
+              color: Colors.black,
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _editButton() {
+    return Positioned(
+      bottom: 30,
+      right: 30,
+      child: FloatingActionButton(
+        heroTag: 'Edit_btn',
+        child: Icon(Icons.edit),
+        onPressed: () {},
+        tooltip: 'Edit',
+      ),
+    );
+  }
+
+  Widget _deleteButton() {
+    return Positioned(
+      bottom: 100,
+      right: 30,
+      child: FloatingActionButton(
+        heroTag: 'Delete_btn',
+        child: Icon(Icons.delete),
+        onPressed: () {},
+        backgroundColor: Colors.red,
       ),
     );
   }
