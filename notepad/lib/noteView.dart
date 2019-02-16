@@ -16,14 +16,14 @@ class NoteView extends StatelessWidget {
   }) : assert(currentNote != null);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext ctx) {
     return Scaffold(
       appBar: _appbar(),
       body: Stack(
         children: <Widget>[
           _contentBox(),
           _editButton(),
-          _deleteButton(),
+          _deleteButton(ctx),
         ],
       ),
     );
@@ -79,14 +79,14 @@ class NoteView extends StatelessWidget {
     );
   }
 
-  Widget _deleteButton() {
+  Widget _deleteButton(BuildContext ctx) {
     return Positioned(
       bottom: 100,
       right: 30,
       child: FloatingActionButton(
         heroTag: 'Delete_btn',
         child: Icon(Icons.delete),
-        onPressed: () {},
+        onPressed: () => Navigator.pop(ctx, 'DELETE'),
         backgroundColor: Colors.red,
       ),
     );

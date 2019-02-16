@@ -89,16 +89,7 @@ class _NotepadState extends State<Notepad> {
                   });
                 },
               ),
-              onTap: () {
-                Navigator.push(
-                  ctx,
-                  MaterialPageRoute(
-                    builder: (ctx) => NoteView(
-                      currentNote: _notes[i],
-                    ),
-                  ),
-                );
-              },
+              onTap: () => _navigateToNoteView(ctx, i),
             ),
           );
         },
@@ -117,15 +108,13 @@ class _NotepadState extends State<Notepad> {
           color: Colors.red,
         ),
         backgroundColor: Colors.yellow,
-        onPressed: () {
-          _navigateToCreateNote(ctx);
-        },
+        onPressed: () => _navigateToCreateNote(ctx),
       ),
     );
   }
 
   void _navigateToCreateNote(BuildContext ctx) async {
-    final newNote = await Navigator.push(
+    final Note newNote = await Navigator.push(
       ctx,
       MaterialPageRoute(builder: (ctx) => NoteCreate()),
     );
@@ -133,6 +122,20 @@ class _NotepadState extends State<Notepad> {
       setState(() {
         _notes.add(newNote);
       });
+    }
+  }
+
+  void _navigateToNoteView(BuildContext ctx, int i) async {
+    var res = await Navigator.push(
+      ctx,
+      MaterialPageRoute(
+        builder: (ctx) => NoteView(
+              currentNote: _notes[i],
+            ),
+      ),
+    );
+    if (res == 'DELETE') {
+      _notes.removeAt(i);
     }
   }
 }
