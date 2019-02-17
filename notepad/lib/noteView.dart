@@ -83,7 +83,11 @@ class NoteView extends StatelessWidget {
   void _navigateToEditNote(BuildContext ctx, Note note) async {
     final Note editedNote = await Navigator.push(
       ctx,
-      MaterialPageRoute(builder: (ctx) => NoteCreate()),
+      MaterialPageRoute(
+        builder: (ctx) => NoteCreate(
+              editNote: note,
+            ),
+      ),
     );
     if (editedNote != null) {
       Navigator.pop(ctx, editedNote);

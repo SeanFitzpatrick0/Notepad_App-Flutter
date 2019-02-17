@@ -12,36 +12,67 @@ import 'package:flutter/material.dart';
 import './note.dart';
 
 class NoteCreate extends StatefulWidget {
+  final Note editNote;
+
+  NoteCreate({
+    this.editNote,
+  });
+
   @override
-  _NoteCreateState createState() => _NoteCreateState();
+  _NoteCreateState createState() => _NoteCreateState(
+        editNote: editNote,
+        hasEditNote: editNote != null,
+      );
 }
 
 class _NoteCreateState extends State<NoteCreate> {
+  bool hasEditNote = false;
+  Note editNote;
+
+  _NoteCreateState({
+    this.editNote,
+    this.hasEditNote = false,
+  });
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Create Note'),
+        title: Text(hasEditNote ? 'Edit Note' : 'Create Note'),
+        backgroundColor: hasEditNote ? editNote.color : null,
       ),
       body: Padding(
         padding: EdgeInsets.all(20.0),
-        child: NoteForm(),
+        child: NoteForm(hasEditNote, editNote),
       ),
     );
   }
 }
 
 class NoteForm extends StatefulWidget {
+  final bool hasEditNote;
+  final Note editNote;
+
+  NoteForm(this.hasEditNote, this.editNote);
+
   @override
-  _NoteFormState createState() => _NoteFormState();
+  _NoteFormState createState() => _NoteFormState(hasEditNote, editNote);
 }
 
 class _NoteFormState extends State<NoteForm> {
   final _formKey = GlobalKey<FormState>();
   final titleController = TextEditingController();
   final contentController = TextEditingController();
-  bool _isImportant = false;
+  bool _isImportant;
   Color _color;
+  bool hasEditNote;
+  Note editNote;
+
+  _NoteFormState(this.hasEditNote, this.editNote) {
+    titleController.text = hasEditNote ? editNote.title : '';
+    contentController.text = hasEditNote ? editNote.content : '';
+    _isImportant = hasEditNote ? editNote.isImportant : false;     
+  }
 
   @override
   void dispose() {
@@ -98,8 +129,8 @@ class _NoteFormState extends State<NoteForm> {
             labelText: 'Color',
           ),
           isEmpty: _color == null,
-          child: new DropdownButtonHideUnderline(
-            child: new DropdownButton(
+          child: DropdownButtonHideUnderline(
+            child: DropdownButton(
               value: _color,
               isDense: true,
               onChanged: (newValue) {
