@@ -134,8 +134,12 @@ class _NotepadState extends State<Notepad> {
             ),
       ),
     );
-    if (res == 'DELETE') {
-      _notes.removeAt(i);
-    }
+    setState(() {
+      if (res == 'DELETE') {
+        _notes.removeAt(i);
+      } else if (res != null) {
+        _notes[i] = res;
+      }
+    });
   }
 }

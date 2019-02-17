@@ -7,6 +7,7 @@ Description: This is the detail view of a specific note.
 import 'package:flutter/material.dart';
 
 import './note.dart';
+import './noteCreate.dart';
 
 class NoteView extends StatelessWidget {
   final Note currentNote;
@@ -22,7 +23,7 @@ class NoteView extends StatelessWidget {
       body: Stack(
         children: <Widget>[
           _contentBox(),
-          _editButton(),
+          _editButton(ctx),
           _deleteButton(ctx),
         ],
       ),
@@ -66,17 +67,27 @@ class NoteView extends StatelessWidget {
     );
   }
 
-  Widget _editButton() {
+  Widget _editButton(BuildContext ctx) {
     return Positioned(
       bottom: 30,
       right: 30,
       child: FloatingActionButton(
         heroTag: 'Edit_btn',
         child: Icon(Icons.edit),
-        onPressed: () {},
+        onPressed: () => _navigateToEditNote(ctx, currentNote),
         tooltip: 'Edit',
       ),
     );
+  }
+
+  void _navigateToEditNote(BuildContext ctx, Note note) async {
+    final Note editedNote = await Navigator.push(
+      ctx,
+      MaterialPageRoute(builder: (ctx) => NoteCreate()),
+    );
+    if (editedNote != null) {
+      Navigator.pop(ctx, editedNote);
+    }
   }
 
   Widget _deleteButton(BuildContext ctx) {
