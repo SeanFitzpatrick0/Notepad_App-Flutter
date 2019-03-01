@@ -7,6 +7,8 @@ Description: This is the home screen for the app.
   the usere to add a note.
 */
 
+import 'dart:async';
+import 'dart:convert';
 import 'package:flutter/material.dart';
 
 import './note.dart';
@@ -40,6 +42,12 @@ class _NotepadState extends State<Notepad> {
   ];
 
   @override
+  void initState() {
+    _retriveNoteData();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext ctx) {
     return Scaffold(
       appBar: AppBar(
@@ -54,6 +62,21 @@ class _NotepadState extends State<Notepad> {
         ],
       ),
     );
+  }
+
+  Future<Null> _retriveNoteData() async {
+    final json =
+        DefaultAssetBundle.of(context).loadString('assets/data/notes.json');
+    final data = JsonDecoder().convert(await json);
+
+    data.forEach((note) {
+      setState(() {
+        _notes.add(Note(
+          title: note['title'],
+          content: note['content'],
+        ));
+      });
+    });
   }
 
   Widget _listNotes() {
